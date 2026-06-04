@@ -1,116 +1,159 @@
-🤖 AI Web Intelligence Laptop Agent
-🌐 From simple Telegram bot → to autonomous AI web research system
+# 🤖 AI Laptop Recommendation Bot
 
+An autonomous AI agent Telegram bot that searches the web in real time, scrapes laptop review pages, extracts structured product data, and recommends the best options under the user's budget.
 
-📖 Project Story
-
-This project started as a simple idea:
-
-> “I want a Telegram bot that can find the best laptops for programming.”
-
-But instead of using static lists or simple responses, the system evolved into a **multi-stage AI agent** that:
-
-- searches the web in real time 🌐  
-- scrapes real websites 🧾  
-- extracts structured product data 🧠  
-- ranks results intelligently 📊  
-- generates AI explanations 🤖  
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![License](https://img.shields.io/badge/License-MIT-green)
+![aiogram](https://img.shields.io/badge/python--telegram--bot-latest-blue)
+![LLM](https://img.shields.io/badge/LLM-integrated-orange?logo=openai)
 
 ---
 
-🚀 What we built step by step
+## ✨ Features
 
-1️⃣ First version — simple Telegram bot
-We started with a basic bot:
-
-- receives user messages
-- returns static or simple responses
-- no real intelligence
-
-👉 Problem: not useful, no real data
+- 🔎 **Smart Web Search** — generates relevant queries automatically and filters low-quality sources (Quora, Pinterest, etc.)
+- 🧾 **Data Extraction Engine** — parses laptop name, price, RAM and specs from raw HTML using regex + heuristics
+- 📊 **Ranking System** — scores laptops by relevance, information completeness, and inferred quality; returns top 5
+- 🤖 **AI Reasoning Layer** — converts structured data into human-readable answers with a best pick, alternatives, and a final conclusion
+- 💬 **Telegram Bot Interface** — clean conversational commands to start, stop, and restart sessions
 
 ---
 
-2️⃣ Adding web search layer 🌐
+## 🛠 Tech Stack
 
-We introduced a search module:
-
-- finds relevant websites based on query
-- filters irrelevant sources (Quora, Pinterest, etc.)
-- builds dynamic URL list
-
-👉 Now the bot could "search the internet"
-
----
-
-3️⃣ Web scraping engine 🧾
-
-Next step was extracting real content:
-
-- scraped HTML pages
-- extracted raw text from laptop review sites
-- handled different website structures
-
-👉 Problem: data was messy and unstructured
+- Python 3.11
+- [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) — Telegram bot framework
+- requests + BeautifulSoup — web scraping
+- Regex-based extraction engine
+- Custom scoring / ranking algorithm
+- LLM integration (AI reasoning layer)
+- ThreadPoolExecutor — async-style execution
 
 ---
 
-4️⃣ Structured data extractor 🧠
+## 📁 Project Structure
 
-We built an extraction system:
+```
+ai-laptop-bot/
+├── .env                  # your secret keys (not in GitHub)
+├── .gitignore
+├── main.py               # entry point
+├── bot.py                # Telegram bot interface & command handlers
+├── agent.py              # orchestration — coordinates all modules
+├── search.py             # web search query generation & filtering
+├── scraper.py            # HTTP fetching & HTML parsing
+├── extractor.py          # regex-based structured data extraction
+├── analyzer.py           # scoring & ranking logic
+├── llm.py                # LLM integration for AI reasoning
+├── formatter.py          # formats final answer for Telegram
+├── memory.py             # session memory management
+└── memory.json           # persisted session state
+```
 
-- regex-based parsing
-- detects:
-  - laptop names
-  - price values
-  - RAM specs
-- converts raw text → structured objects
-
-```json id="data_example"
-{
-  "name": "Lenovo IdeaPad 5",
-  "price": 799,
-  "ram": "16GB"
-}
-
----
-
-User Input ↓ Telegram Bot ↓ Search Engine ↓ Web Scraper ↓ Extractor (structured data) ↓ Ranking Engine ↓ LLM Reasoning ↓ Final Answer ↓ Telegram Response
-id="architecture_final"
+> ⚠️ `.env` is excluded from GitHub via `.gitignore` — your API keys stay private.
 
 ---
 
-🧠 What makes this project special
+## 🚀 Getting Started
 
-This is not just a bot.
+**1. Clone the repository**
 
-It is a **multi-stage autonomous AI system** that combines:
+```bash
+git clone https://github.com/TyomPapiyan/ai-laptop-bot.git
+cd ai-laptop-bot
+```
 
-- 🔎 Information retrieval
-- 🧾 Web scraping
-- 🧠 Data extraction
-- 📊 Ranking algorithms
-- 🤖 LLM reasoning
+**2. Create virtual environment**
 
-It behaves similarly to:
+```bash
+py -3.11 -m venv venv
+venv\Scripts\activate
+```
 
-- Perplexity AI search agents
-- product recommendation engines
-- autonomous research assistants
+**3. Install dependencies**
+
+```bash
+pip install python-telegram-bot requests beautifulsoup4 python-dotenv
+```
+
+**4. Create `.env` file**
+
+```
+BOT_TOKEN=your_telegram_bot_token
+```
+
+- Get your Telegram token from [@BotFather](https://t.me/BotFather)
+
+**5. Run the bot**
+
+```bash
+python main.py
+```
 
 ---
 
-⚙️ Tech Stack
+## 🏗 Architecture
 
-- Python 3 🐍
-- Telegram Bot API 📩
-- Web scraping (requests / BeautifulSoup)
-- Regex extraction engine
-- Custom ranking system
-- LLM integration layer 🤖
-- ThreadPoolExecutor (async execution)
+```
+User Input
+    ↓
+Telegram Bot  (bot.py)
+    ↓
+AI Agent      (agent.py)
+    ↓
+Search Engine (search.py)
+    ↓
+Web Scraper   (scraper.py)
+    ↓
+Extractor     (extractor.py)  →  structured data
+    ↓
+Ranking Engine (analyzer.py)
+    ↓
+LLM Reasoning  (llm.py)
+    ↓
+Formatter      (formatter.py)
+    ↓
+Telegram Response
+```
 
 ---
 
-📦 Installation
-bash git clone https://github.com/your-username/ai-laptop-agent.git cd ai-laptop-agent pip install -r requirements.txt
+## 💬 Example
+
+```
+You:  I need a laptop for programming, budget $800
+
+Bot:  🔎 Searching the web...
+
+      🏆 Best Pick: Lenovo ThinkPad E15 Gen 4 — $749
+         16 GB RAM · Ryzen 5 5625U · 512 GB SSD
+         Great build quality, excellent keyboard, perfect for dev work.
+
+      🔁 Alternatives:
+         • Acer Aspire 5 — $699 · 8 GB RAM · solid budget option
+         • ASUS VivoBook 15 — $779 · 16 GB RAM · good display
+
+      📌 Conclusion: The ThinkPad gives the best balance of performance,
+         build quality, and price for a programming workflow.
+```
+
+---
+
+## 📋 Commands
+
+| Command      | Description           |
+|--------------|-----------------------|
+| `/start`     | Start the bot         |
+| `/help`      | Show instructions     |
+| `/restart`   | Restart session       |
+| `/end`       | Stop responses        |
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — feel free to use, modify, and distribute it.
+
+```
+MIT License — © 2026 TyomPapiyan
+```
